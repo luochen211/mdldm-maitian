@@ -78,7 +78,7 @@ export function saveFollowers(platform, r) {
 export async function collectFollowers(only, skip = []) {
   const out = {};
   for (const [p, fn] of Object.entries(followerCollectors)) {
-    if ((only && !only.includes(p)) || skip.includes(p)) continue;
+    if ((only && !only.includes(p)) || skip.includes(p) || (config.platforms && !config.platforms.includes(p))) continue;   // config.platforms 只采列出的平台
     try { const r = await fn(); if (!r) { out[p] = '没读到'; continue; } const n = saveFollowers(p, r); out[p] = { total: r.total, backfilled: n }; }
     catch (e) { out[p] = '出错：' + e.message.slice(0, 80); }
   }
