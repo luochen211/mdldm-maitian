@@ -137,7 +137,7 @@ async function handle(req, res) {
     return send(res, 200, widgetPage(widgetScript(req, 'maitian-loader.js')), 'text/html; charset=utf-8');
   }
   if (u.pathname === '/api/overview') {
-    return send(res, 200, { name: config.name || '麦田', siteOn: !!SITE, learn: learnOn(config) ? learnUrl('maitian-board') : '', siteName: SITE ? SITE.name : '', siteLogo: !!(SITE && config.site.logo), board: config.board && config.board.url, driver: config.driver,
+    return send(res, 200, { name: config.name || '麦田', platforms: config.platforms || null, siteOn: !!SITE, learn: learnOn(config) ? learnUrl('maitian-board') : '', siteName: SITE ? SITE.name : '', siteLogo: !!(SITE && config.site.logo), board: config.board && config.board.url, driver: config.driver,
       episodes: episodes().sort((a, b) => (b.episode || 0) - (a.episode || 0)).map(e => episodeView(e)), actions: actions.slice(-8).reverse(),
       site: { days: db.prepare('SELECT * FROM site_daily ORDER BY day').all(), channels: db.prepare('SELECT * FROM site_channels ORDER BY revenue DESC').all(),
         campaigns: db.prepare('SELECT * FROM site_campaigns ORDER BY reg DESC').all(), campaignsOn: getMeta('siteCampaigns') === 'on' },
